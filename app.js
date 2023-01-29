@@ -1,18 +1,20 @@
-//DEPENDENCIES
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 
-//CONFIGURATION
 const app = express();
 
-// MIDDLEWARE
 app.use(cors());
 app.use(express.json());
 
-//ROUTES
-app.get('/', (req, res) => {
-    res.send('Welcome to Vieeeeews')
+const viewsController = require("./controllers/viewController");
+app.use("/views", viewsController);
+
+app.get("/", (req, res) => {
+  res.send("Welcome to Vieeeeews");
 });
 
-// EXPORT
+app.get("*", (req, res) => {
+  res.status(404).send("Page not found");
+});
+
 module.exports = app;
