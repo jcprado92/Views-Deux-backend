@@ -1,15 +1,45 @@
-const express = require('express');
+const express = require("express");
 const views = express.Router();
-const { getAllViews } = require('../queries/views')
+const { getAllViews, getView, createView } = require("../queries/views");
+const { validateName, validateLocation, validateIsFav } = require('../validations/checkViews')
 
 // INDEX
-views.get('/', async (req, res) => {
-    const allViews = await getAllViews();
-    if(allViews[0]){
-        res.status(200).json(allViews);
-    }else{
-        res.status(500).json({ error: 'server error'});
+views.get("/", async (req, res) => {
+  const allViews = await getAllViews();
+  if (allViews[0]) {
+    res.status(200).json({ payload: allViews, success: true });
+  } else {
+    res.status(500).json({ error: "server error" });
+  }
+});
+
+// SHOW
+views.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const view = await getView(id);
+  if (view.id) {
+    res.json({ payload: view, success: true });
+  } else {
+    res
+      .status(404)
+      .json({ payload: "not found", success: false, error: "View not found" });
+  }
+});
+
+// CREATE
+views.post("/", validateName, validateLocation, validateIsFav, async (req, res) => {
+  try {
+    const createdView = await createView(req.body);
+    if (createdView.id) {
+      res.status(200).json({ payload: createdView, success: true });
+    } else {
+      res
+        .status(422)
+        .json({ payload: "Could not create View", success: false });
     }
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 module.exports = views;
