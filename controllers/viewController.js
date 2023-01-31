@@ -11,7 +11,7 @@ const {
   validateName,
   validateLocation,
   validateIsFav,
-  validateURL,
+  // validateURL,
 } = require("../validations/checkViews");
 
 // INDEX
@@ -43,7 +43,7 @@ views.post(
   validateName,
   validateLocation,
   validateIsFav,
-  validateURL,
+  // validateURL,
   async (req, res) => {
     try {
       const createdView = await createView(req.body);
@@ -66,12 +66,12 @@ views.put(
   validateName,
   validateLocation,
   validateIsFav,
-  validateURL,
+  // validateURL,
   async (req, res) => {
     const { id } = req.params;
-    const updatedView = await updateView(id, req.body);
+    const updatedView = await updateView(req.body, id);
     if (updatedView.id) {
-      res.status(200).json(updatedPic);
+      res.status(200).json(updatedView);
     } else {
       res.status(404).json({ error: "View not found" });
     }

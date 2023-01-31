@@ -38,14 +38,14 @@ const createView = async (view) => {
 };
 
 // UPDATE ROUTE
-const updateView = async (view) => {
+const updateView = async (view, id) => {
   if (!view.url) {
     view.url = "https://dummyimage.com/400x400/6e6c6e/e9e9f5.png&text=No+Image";
   }
   try {
     const updatedView = await db.one(
-      "UPDATE pics SET name=$1, url=$2, location=$3, is_favorite=$4 WHERE id=$5 RETURNING *,"[
-        (view.name, view.url, view.location, view.is_favorite)
+      "UPDATE views SET name=$1, url=$2, location=$3, is_favorite=$4 WHERE id=$5 RETURNING *",[
+        view.name, view.url, view.location, view.is_favorite, id
       ]
     );
     return updatedView;

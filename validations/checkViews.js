@@ -36,17 +36,17 @@ const validateIsFav = (req, res, next) => {
   }
 };
 // URL INPUT VALIDATION
-const validateURL = (req, res, next) => {
-  if (
-    req.body.url.substring(0, 7) === "http://" ||
-    req.body.url.substring(0, 8) === "https://"
-  ) {
-    return next();
-  } else {
-    res
-      .status(400)
-      .json({ error: "You forgot to start your url with http:// or https://" });
-  }
-};
+// const validateURL = (req, res, next) => {
+//   if (
+//     req.body.url.substring(0, 7) === "http://" ||
+//     req.body.url.substring(0, 8) === "https://"
+//   ) {
+//     return next();
+//   } else {
+//     res
+//       .status(400)
+//       .json({ error: "You forgot to start your url with http:// or https://" });
+//   }
+// };
 
-module.exports = { validateName, validateLocation, validateIsFav, validateURL };
+module.exports = { validateName, validateLocation, validateIsFav};//, validateURL };
