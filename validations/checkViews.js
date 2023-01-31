@@ -1,3 +1,4 @@
+// NAME INPUT VALIDATION
 const validateName = (req, res, next) => {
   console.log("name is being checked");
   const { name } = req.body;
@@ -8,7 +9,7 @@ const validateName = (req, res, next) => {
     res.status(400).json({ error: "We need a name..." });
   }
 };
-
+// LOCATION INPUT VALIDATION
 const validateLocation = (req, res, next) => {
   console.log("location is being checked");
   const { location } = req.body;
@@ -19,7 +20,7 @@ const validateLocation = (req, res, next) => {
     res.status(400).json({ error: "We need a location..." });
   }
 };
-
+// BOOLEAN INPUT VALIDATION
 const validateIsFav = (req, res, next) => {
   console.log("Is_favorite is being checked");
   const { is_favorite } = req.body;
@@ -34,5 +35,18 @@ const validateIsFav = (req, res, next) => {
     res.status(400).json({ error: "is_favorite must be a boolean value" });
   }
 };
+// URL INPUT VALIDATION
+const validateURL = (req, res, next) => {
+  if (
+    req.body.url.substring(0, 7) === "http://" ||
+    req.body.url.substring(0, 8) === "https://"
+  ) {
+    return next();
+  } else {
+    res
+      .status(400)
+      .json({ error: "You forgot to start your url with http:// or https://" });
+  }
+};
 
-module.exports = { validateName, validateLocation, validateIsFav };
+module.exports = { validateName, validateLocation, validateIsFav, validateURL };
