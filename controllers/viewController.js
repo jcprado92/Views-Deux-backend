@@ -40,15 +40,15 @@ views.get("/:id", async (req, res) => {
 // CREATE
 views.post(
   "/",
-  validateName,
-  validateLocation,
-  validateIsFav,
+  // validateName,
+  // validateLocation,
+  // validateIsFav,
   // validateURL,
   async (req, res) => {
     try {
       const createdView = await createView(req.body);
       if (createdView.id) {
-        res.status(200).json({ payload: createdView, success: true });
+        res.status(200).json({ payload: createdView, success: true, message: 'We created this view ' });
       } else {
         res
           .status(422)
@@ -65,7 +65,7 @@ views.put(
   "/:id",
   validateName,
   validateLocation,
-  validateIsFav,
+  // validateIsFav,
   // validateURL,
   async (req, res) => {
     const { id } = req.params;

@@ -6,7 +6,7 @@ const getAllViews = async () => {
     const allViews = await db.any("SELECT * FROM views");
     return allViews;
   } catch (err) {
-    return err;
+    console.log(err);
   }
 };
 
@@ -44,7 +44,8 @@ const updateView = async (view, id) => {
   }
   try {
     const updatedView = await db.one(
-      "UPDATE views SET name=$1, url=$2, location=$3, is_favorite=$4 WHERE id=$5 RETURNING *",[
+      "UPDATE views SET name=$1, url=$2, location=$3, is_favorite=$4 WHERE id=$5 RETURNING *",
+      [
         view.name, view.url, view.location, view.is_favorite, id
       ]
     );
